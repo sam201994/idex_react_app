@@ -1,8 +1,3 @@
-/*
- * HomePage Messages
- *
- * This contains all the text for the HomePage container.
- */
 import { defineMessages } from 'react-intl';
 
 export const scope = 'app.containers.HomePage';
@@ -39,5 +34,41 @@ export default defineMessages({
   editProfile: {
     id: `${scope}.editProfile`,
     defaultMessage: 'Edit Profile',
+  },
+  profile: {
+    id: `${scope}.profile`,
+    defaultMessage: 'Profile',
+  },
+  help: {
+    id: `${scope}.help`,
+    defaultMessage: 'Help',
+  },
+  saveProfile: {
+    id: `${scope}.saveProfile`,
+    defaultMessage: 'Save',
+  },
+  back: {
+    id: `${scope}.back`,
+    defaultMessage: 'back',
+  },
+  recentLikes: {
+    id: `${scope}.recentLikes`,
+    defaultMessage: 'Recent Likes',
+  },
+  logoutOnAllDevices: {
+    id: `${scope}.logoutOnAllDevices`,
+    defaultMessage: 'Logout on all devices',
+  },
+  contactUs: {
+    id: `${scope}.contactUs`,
+    defaultMessage: 'Contact us',
+  },
+  contactUsSubHeading: {
+    id: `${scope}.contactUsSubHeading`,
+    defaultMessage: 'Let us know how we can help',
+  },
+  send: {
+    id: `${scope}.send`,
+    defaultMessage: 'Send',
   },
 });

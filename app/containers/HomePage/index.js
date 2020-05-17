@@ -9,30 +9,22 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import messages from './messages';
-
-const Header = styled.div`
-  background-color: #ffffff;
-  height: 100px;
-`;
+import messages from 'utils/messages';
+import ProfileBox from 'components/profileBox';
+import { BlackText, GreyText, BlueText, InputBox } from 'components/textTypes';
+import { bindActionCreators } from 'redux';
+import Actions from './actions';
 
 const FormBox = styled.div`
   display: flex;
   background-color: #ffffff;
   flex-direction: column;
-  height: 500px;
   width: auto;
   max-width: 500px;
   margin: 20px;
   border: 1px solid #f2f2f2;
 `;
 
-const ProfileBox = styled.div`
-  background-color: #ffe6e6;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-`;
 const ProfileBoxRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -46,7 +38,6 @@ const ProfileDetilsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
   margin: 10px;
   padding: 5px;
 `;
@@ -62,17 +53,6 @@ const FieldBox = styled.div`
   flex-direction: column;
 `;
 
-const HeadingText = styled.div`
-  color: #d3d3d3;
-  font-size: 10px;
-  font-weight: bold;
-`;
-const ContentText = styled.div`
-  color: #262626;
-  font-size: 10px;
-  font-weight: bold;
-`;
-
 const BreakLine = styled.div`
   background-color: #f2f2f2;
   height: 1px;
@@ -84,13 +64,34 @@ const BlueTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  cursor: pointer;
+  min-width: 80px;
 `;
 
-const BlueText = styled.div`
-  color: #0066ff;
-  font-size: 10px;
-  font-weight: bold;
+const EditSaveContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  cursor: pointer;
+  min-width: 80px;
+  margin-bottom: 10px;
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const CheckBox = styled.div`
+  margin-right: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  height: 14px;
+  width: 14px;
+  border: 1px solid #c2c2c2;
+  background-color: ${props =>
+    props.logoutOnAllDevices ? `#2CB308` : `#ffffff`};
 `;
 
 class HomePage extends Component {
@@ -98,14 +99,26 @@ class HomePage extends Component {
     super(props);
     this.state = {
       editProfile: false,
+      name: props.userInfo.fullName,
+      email: props.userInfo.email,
+      logoutOnAllDevices: false,
     };
+  }
+
+  componentDidMount() {
+    const email = localStorage.getItem('email');
+    const name = localStorage.getItem('name');
+    this.setState({
+      name: name || this.props.userInfo.fullName,
+      email: email || this.props.userInfo.email,
+    });
   }
 
   renderText = field => (
     <ProfileDetilsRow>
       <FieldBox>
         <BlueTextContainer>
-          <BlueText>
+          <BlueText size={10}>
             <FormattedMessage {...messages[field]} />
           </BlueText>
         </BlueTextContainer>
@@ -113,37 +126,134 @@ class HomePage extends Component {
     </ProfileDetilsRow>
   );
 
-  render() {
-    const { userInfo } = this.props;
+  toggleEditProfile = () => {
+    const { editProfile } = this.state;
+    this.setState({
+      editProfile: !editProfile,
+    });
+  };
+
+  renderProfile = userInfo => {
+    const { name, email, editProfile } = this.state;
     return (
       <div>
-        <Header />
+        <ProfileDetilsBox>
+          <GreyText size={10}>
+            <FormattedMessage {...messages.fullName} />
+          </GreyText>
+          <BlackText size={10}>{userInfo.fullName}</BlackText>
+
+          {editProfile ? (
+            <InputBox size={14}>
+              <input
+                type="text"
+                name="fullName"
+                value={name}
+                onChange={e => this.setState({ name: e.target.value })}
+              />
+            </InputBox>
+          ) : null}
+        </ProfileDetilsBox>
+        <ProfileDetilsBox>
+          <GreyText size={10}>
+            <FormattedMessage {...messages.email} />
+          </GreyText>
+          <BlackText size={10}>{userInfo.email}</BlackText>
+          {editProfile ? (
+            <InputBox size={14}>
+              <input
+                type="text"
+                name="email"
+                value={email}
+                onChange={e => this.setState({ email: e.target.value })}
+              />
+            </InputBox>
+          ) : null}
+        </ProfileDetilsBox>
+      </div>
+    );
+  };
+
+  onSaveProfile = () => {
+    const { name, email } = this.state;
+    const { actions } = this.props;
+    this.setState({
+      editProfile: false,
+    });
+    actions.saveProfile(name, email);
+  };
+
+  renderSaveButton = () => {
+    const { editProfile } = this.state;
+    if (editProfile)
+      return (
+        <BlueText size={10} onClick={this.onSaveProfile}>
+          <FormattedMessage {...messages.saveProfile} />
+        </BlueText>
+      );
+    return (
+      <GreyText size={10}>
+        <FormattedMessage {...messages.saveProfile} />
+      </GreyText>
+    );
+  };
+
+  toggleCheckBox = () => {
+    const { logoutOnAllDevices } = this.state;
+    this.setState({
+      logoutOnAllDevices: !logoutOnAllDevices,
+    });
+  };
+
+  renderLogout = () => {
+    const { logoutOnAllDevices } = this.state;
+    return (
+      <ProfileDetilsRow>
+        <CheckBox
+          logoutOnAllDevices={logoutOnAllDevices}
+          onClick={this.toggleCheckBox}
+        />
+        <FieldBox>
+          <BlueTextContainer>
+            <BlackText size={10}>
+              <FormattedMessage {...messages.logoutOnAllDevices} />
+            </BlackText>
+          </BlueTextContainer>
+        </FieldBox>
+      </ProfileDetilsRow>
+    );
+  };
+
+  render() {
+    const { userInfo } = this.props;
+    const { editProfile } = this.state;
+    const editProfileText = editProfile ? 'back' : 'editProfile';
+    return (
+      <div>
         <FormBox>
           <ProfileBoxRow>
-            <ProfileBox />
+            <ProfileBox size={100} />
           </ProfileBoxRow>
           <ProfileDetilsRow>
+            {this.renderProfile(userInfo)}
             <div>
-              <ProfileDetilsBox>
-                <HeadingText>
-                  <FormattedMessage {...messages.fullName} />
-                </HeadingText>
-                <ContentText>{userInfo.fullName}</ContentText>
-              </ProfileDetilsBox>
-              <ProfileDetilsBox>
-                <HeadingText>
-                  <FormattedMessage {...messages.email} />
-                </HeadingText>
-                <ContentText>{userInfo.email}</ContentText>
-              </ProfileDetilsBox>
+              <EditSaveContainer onClick={this.toggleEditProfile}>
+                <BlueText size={10}>
+                  <FormattedMessage {...messages[editProfileText]} />
+                </BlueText>
+              </EditSaveContainer>
+              <EditSaveContainer>{this.renderSaveButton()}</EditSaveContainer>
             </div>
           </ProfileDetilsRow>
           <BreakLine />
-
           {this.renderText('changePassword')}
           <BreakLine />
-
           {this.renderText('selectAppLanguage')}
+          <BreakLine />
+          <Bottom>
+            {this.renderText('logout')}
+            {this.renderLogout()}
+          </Bottom>
         </FormBox>
       </div>
     );
@@ -153,8 +263,20 @@ class HomePage extends Component {
 function mapStateToProps(state) {
   const { homePage } = state;
   return {
-    userInfo: homePage.user.userAccountInfo,
+    userInfo: homePage.userAccountInfo,
   };
 }
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(
+    {
+      saveProfile: Actions.saveProfile,
+    },
+    dispatch,
+  ),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomePage);
