@@ -21,7 +21,8 @@ const FormBox = styled.div`
   background-color: #ffffff;
   flex-direction: column;
   height: 500px;
-  width: 500px;
+  width: auto;
+  max-width: 500px;
   margin: 20px;
   border: 1px solid #f2f2f2;
 `;
@@ -55,6 +56,12 @@ const ProfileDetilsBox = styled.div`
   flex-direction: column;
   margin-bottom: 10px;
 `;
+
+const FieldBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const HeadingText = styled.div`
   color: #d3d3d3;
   font-size: 10px;
@@ -73,10 +80,38 @@ const BreakLine = styled.div`
   margin-right: 10px;
 `;
 
+const BlueTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BlueText = styled.div`
+  color: #0066ff;
+  font-size: 10px;
+  font-weight: bold;
+`;
+
 class HomePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      editProfile: false,
+    };
   }
+
+  renderText = field => (
+    <ProfileDetilsRow>
+      <FieldBox>
+        <BlueTextContainer>
+          <BlueText>
+            <FormattedMessage {...messages[field]} />
+          </BlueText>
+        </BlueTextContainer>
+      </FieldBox>
+    </ProfileDetilsRow>
+  );
 
   render() {
     const { userInfo } = this.props;
@@ -104,6 +139,11 @@ class HomePage extends Component {
             </div>
           </ProfileDetilsRow>
           <BreakLine />
+
+          {this.renderText('changePassword')}
+          <BreakLine />
+
+          {this.renderText('selectAppLanguage')}
         </FormBox>
       </div>
     );
