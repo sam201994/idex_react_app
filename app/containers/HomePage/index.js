@@ -13,6 +13,7 @@ import messages from 'utils/messages';
 import ProfileBox from 'components/profileBox';
 import { BlackText, GreyText, BlueText, InputBox } from 'components/textTypes';
 import { bindActionCreators } from 'redux';
+import { changeLocale } from 'containers/LanguageProvider/actions';
 import Actions from './actions';
 
 const FormBox = styled.div`
@@ -83,6 +84,18 @@ const Bottom = styled.div`
   justify-content: space-between;
 `;
 
+const Dropdown = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  select {
+    height: 20px;
+    font-size: 10px;
+    margin: 10px;
+  }
+`;
+
 const CheckBox = styled.div`
   margin-right: 10px;
   margin-bottom: 5px;
@@ -132,6 +145,27 @@ class HomePage extends Component {
       editProfile: !editProfile,
     });
   };
+
+  onLanguageChange = e => {
+    const { actions } = this.props;
+    actions.onLocaleToggle(e.target.value);
+  };
+
+  renderLanguage = () => (
+    <Bottom>
+      {this.renderText('selectAppLanguage')}
+      <Dropdown>
+        <select
+          id="dropdown"
+          onChange={this.onLanguageChange}
+          value={this.props.language}
+        >
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+        </select>
+      </Dropdown>
+    </Bottom>
+  );
 
   renderProfile = userInfo => {
     const { name, email, editProfile } = this.state;
@@ -248,7 +282,7 @@ class HomePage extends Component {
           <BreakLine />
           {this.renderText('changePassword')}
           <BreakLine />
-          {this.renderText('selectAppLanguage')}
+          {this.renderLanguage()}
           <BreakLine />
           <Bottom>
             {this.renderText('logout')}
@@ -261,9 +295,10 @@ class HomePage extends Component {
 }
 
 function mapStateToProps(state) {
-  const { homePage } = state;
+  const { homePage, language } = state;
   return {
     userInfo: homePage.userAccountInfo,
+    language: language.locale,
   };
 }
 
@@ -271,6 +306,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(
     {
       saveProfile: Actions.saveProfile,
+      onLocaleToggle: changeLocale,
     },
     dispatch,
   ),

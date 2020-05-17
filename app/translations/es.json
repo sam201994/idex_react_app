@@ -1,0 +1,17 @@
+{
+  "app.containers.HomePage.back": "espalda",
+  "app.containers.HomePage.changePassword": "Cambia la contraseña",
+  "app.containers.HomePage.contactUs": "Contacta con nosotros",
+  "app.containers.HomePage.contactUsSubHeading": "Háganos saber cómo podemos ayuda",
+  "app.containers.HomePage.editProfile": "Editar perfil",
+  "app.containers.HomePage.email": "correo electrónico",
+  "app.containers.HomePage.fullName": "Nombre completo",
+  "app.containers.HomePage.help": "ayuda",
+  "app.containers.HomePage.logout": "cerrar sesión",
+  "app.containers.HomePage.logoutOnAllDevices": "Cerrar sesión en todos los dispositivos",
+  "app.containers.HomePage.profile": "Perfil",
+  "app.containers.HomePage.saveProfile": "Salvar",
+  "app.containers.HomePage.selectAppLanguage": "Seleccionar idioma de la aplicación",
+  "app.containers.HomePage.send": "enviar",
+  "app.containers.NotFoundPage.header": "¡Este es el contenedor NotFoundPage!"
+}

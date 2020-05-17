@@ -1,1 +1,17 @@
-[]
+{
+  "app.containers.HomePage.back": "back",
+  "app.containers.HomePage.changePassword": "Change Password",
+  "app.containers.HomePage.contactUs": "Contact us",
+  "app.containers.HomePage.contactUsSubHeading": "Let us know how we can help",
+  "app.containers.HomePage.editProfile": "Edit Profile",
+  "app.containers.HomePage.email": "Email",
+  "app.containers.HomePage.fullName": "Full Name",
+  "app.containers.HomePage.help": "Help",
+  "app.containers.HomePage.logout": "Logout",
+  "app.containers.HomePage.logoutOnAllDevices": "Logout on all devices",
+  "app.containers.HomePage.profile": "Profile",
+  "app.containers.HomePage.saveProfile": "Save",
+  "app.containers.HomePage.selectAppLanguage": "Select App Language",
+  "app.containers.HomePage.send": "Send",
+  "app.containers.NotFoundPage.header": "This is the NotFoundPage container!"
+}

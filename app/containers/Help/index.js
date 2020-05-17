@@ -95,7 +95,6 @@ export default function Help() {
           id="noter-text-area"
           name="textarea"
           placeholder={str}
-          place
         />
       </TextArea>
       <ButtonContainer>

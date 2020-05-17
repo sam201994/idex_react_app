@@ -3,10 +3,6 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.containers.HomePage';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the HomePage container!',
-  },
   fullName: {
     id: `${scope}.fullName`,
     defaultMessage: 'Full Name',
@@ -27,10 +23,6 @@ export default defineMessages({
     id: `${scope}.logout`,
     defaultMessage: 'Logout',
   },
-  logonAllDevices: {
-    id: `${scope}.logonAllDevices`,
-    defaultMessage: 'Log on all devices',
-  },
   editProfile: {
     id: `${scope}.editProfile`,
     defaultMessage: 'Edit Profile',
@@ -50,10 +42,6 @@ export default defineMessages({
   back: {
     id: `${scope}.back`,
     defaultMessage: 'back',
-  },
-  recentLikes: {
-    id: `${scope}.recentLikes`,
-    defaultMessage: 'Recent Likes',
   },
   logoutOnAllDevices: {
     id: `${scope}.logoutOnAllDevices`,
