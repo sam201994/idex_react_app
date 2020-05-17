@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { MdNotificationsNone } from 'react-icons/Md';
+import { MdNotificationsNone } from 'react-icons/md';
 
 import { BlackText, GreyText } from './textTypes';
 import ProfileBox from './profileBox';
