@@ -74,12 +74,15 @@ const BreakLine = styled.div`
 `;
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const { userInfo } = this.props;
     return (
       <div>
         <Header />
-
         <FormBox>
           <ProfileBoxRow>
             <ProfileBox />
